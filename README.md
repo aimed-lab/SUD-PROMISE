@@ -2,6 +2,7 @@
 
 A demo interactive web-based dashboard for evaluating drug repositioning candidates for **Substance Use Disorders (SUDs)**. Developed at the University of Alabama at Birmingham's Systems Pharmacology AI Research Center (SPARC).
 
+> ** [Try the Interactive Demo](https://huggingface.co/spaces/paulnhuu174/drugrepo4)**
 ## Overview
 
 SUD-PROMISE (Substance Use Disorder - Platform for Repositioning and Outcome-driven Medical Innovation through Systematic Evidence) provides researchers with a comprehensive visualization tool for assessing potential drug candidates across multiple SUD categories:
