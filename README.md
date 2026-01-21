@@ -7,12 +7,12 @@ A demo interactive web-based dashboard for evaluating drug repositioning candida
 
 SUD-PROMISE (Substance Use Disorder - Platform for Repositioning and Outcome-driven Medical Innovation through Systematic Evidence) provides researchers with a comprehensive visualization tool for assessing potential drug candidates across multiple SUD categories:
 
-- 💊 **Opioid Use Disorder** - Addiction to opioids including prescription painkillers, heroin, and fentanyl
-- 🍺 **Alcohol Use Disorder** - Problematic pattern of alcohol use leading to clinically significant impairment
-- ⚡ **Stimulant Use Disorder** - Addiction to cocaine, methamphetamine, or prescription stimulants
-- 🌿 **Cannabis Use Disorder** - Problematic cannabis use with withdrawal and tolerance symptoms
-- 😴 **Sedative/Hypnotic Disorder** - Dependence on benzodiazepines or other sedative medications
-- 🚬 **Nicotine Use Disorder** - Tobacco/nicotine dependence and addiction
+- **Opioid Use Disorder** - Addiction to opioids including prescription painkillers, heroin, and fentanyl
+- **Alcohol Use Disorder** - Problematic pattern of alcohol use leading to clinically significant impairment
+- **Stimulant Use Disorder** - Addiction to cocaine, methamphetamine, or prescription stimulants
+- **Cannabis Use Disorder** - Problematic cannabis use with withdrawal and tolerance symptoms
+- **Sedative/Hypnotic Disorder** - Dependence on benzodiazepines or other sedative medications
+- **Nicotine Use Disorder** - Tobacco/nicotine dependence and addiction
 
 ## Features
 
