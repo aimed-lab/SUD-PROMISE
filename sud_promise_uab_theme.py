@@ -76,17 +76,17 @@ def generate_synthetic_data():
     
     # SUD Categories - UAB Green/Gold theme
     sud_categories = [
-        SUDCategory("Opioid Use Disorder", "🟩", UAB_GREEN, "💊", 12, 
+        SUDCategory("Opioid Use Disorder", "", UAB_GREEN, "", 12, 
                    "Addiction to opioids including prescription painkillers, heroin, and fentanyl"),
-        SUDCategory("Alcohol Use Disorder", "🟨", UAB_GOLD, "🍺", 8,
+        SUDCategory("Alcohol Use Disorder", "", UAB_GOLD, "", 8,
                    "Problematic pattern of alcohol use leading to clinically significant impairment"),
-        SUDCategory("Stimulant Use Disorder", "🟢", UAB_LIGHT_GREEN, "⚡", 6,
+        SUDCategory("Stimulant Use Disorder", "", UAB_LIGHT_GREEN, "", 6,
                    "Addiction to cocaine, methamphetamine, or prescription stimulants"),
-        SUDCategory("Cannabis Use Disorder", "🟩", UAB_ACCENT_TEAL, "🌿", 5,
+        SUDCategory("Cannabis Use Disorder", "", UAB_ACCENT_TEAL, "", 5,
                    "Problematic cannabis use with withdrawal and tolerance symptoms"),
-        SUDCategory("Sedative/Hypnotic Disorder", "🟫", "#8B6914", "😴", 3,
+        SUDCategory("Sedative/Hypnotic Disorder", "", "#8B6914", "", 3,
                    "Dependence on benzodiazepines or other sedative medications"),
-        SUDCategory("Nicotine Use Disorder", "🟧", UAB_DARK_GOLD, "🚬", 4,
+        SUDCategory("Nicotine Use Disorder", "", UAB_DARK_GOLD, "", 4,
                    "Tobacco/nicotine dependence and addiction"),
     ]
     
@@ -272,11 +272,11 @@ def format_date_ago(date):
 def get_impact_badge(impact):
     """Return badge for project impact - UAB theme"""
     if impact > 0.10:
-        return f'<span style="background: {UAB_GREEN}; padding: 3px 10px; border-radius: 10px; color: white;">🔥 High +{impact:.2f}</span>'
+        return f'<span style="background: {UAB_GREEN}; padding: 3px 10px; border-radius: 10px; color: white;">High +{impact:.2f}</span>'
     elif impact > 0.05:
-        return f'<span style="background: {UAB_GOLD}; padding: 3px 10px; border-radius: 10px; color: white;">⚡ Moderate +{impact:.2f}</span>'
+        return f'<span style="background: {UAB_GOLD}; padding: 3px 10px; border-radius: 10px; color: white;">Moderate +{impact:.2f}</span>'
     else:
-        return f'<span style="background: #A0AEC0; padding: 3px 10px; border-radius: 10px; color: white;">✨ Low +{impact:.2f}</span>'
+        return f'<span style="background: #A0AEC0; padding: 3px 10px; border-radius: 10px; color: white;">Low +{impact:.2f}</span>'
 
 # ========================================
 # VIEW RENDERERS
@@ -294,7 +294,7 @@ def render_landing_dashboard():
     
     html = f"""
     <div style="padding: 20px;">
-        <h1 style="color: {UAB_GREEN};">🧬 SUD-PROMISE Drug Repositioning Assessment Platform</h1>
+        <h1 style="color: {UAB_GREEN};">SUD-PROMISE Drug Repositioning Assessment Platform</h1>
         <p style="font-size: 16px; color: {UAB_DARK_GREEN};">University of Alabama at Birmingham - Evidence-Based Drug Discovery for Substance Use Disorders</p>
         
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 30px 0;">
@@ -312,16 +312,16 @@ def render_landing_dashboard():
             </div>
         </div>
         
-        <h2 style="color: {UAB_GREEN};">🎯 SUD Categories</h2>
+        <h2 style="color: {UAB_GREEN};">SUD Categories</h2>
         <p style="color: #718096; margin-bottom: 20px;">Select a category to view repositioning candidates</p>
     </div>
     """
     
     # Category buttons
-    category_choices = [f"{cat.color} {cat.name} ({cat.candidate_count} candidates)" for cat in SUD_CATEGORIES]
+    category_choices = [f"{cat.name} ({cat.candidate_count} candidates)" for cat in SUD_CATEGORIES]
     
     # Top candidates preview
-    top_html = '<div style="padding: 0 20px;"><h2 style="color: ' + UAB_GREEN + ';">⭐ Top Candidates by Evidence Score</h2>'
+    top_html = '<div style="padding: 0 20px;"><h2 style="color: ' + UAB_GREEN + ';">Top Candidates by Evidence Score</h2>'
     for i, candidate in enumerate(top_candidates, 1):
         stars = get_evidence_stars(candidate.evidence_score)
         status_badge = get_status_badge(candidate.status)
@@ -348,7 +348,7 @@ def render_category_view(category_selection, sort_by="evidence_score"):
         return "<p>Please select a category</p>"
     
     # Parse category name
-    category_name = category_selection.split(" (")[0].replace("🟩 ", "").replace("🟨 ", "").replace("🟢 ", "").replace("🟫 ", "").replace("🟧 ", "").strip()
+    category_name = category_selection.split(" (")[0].strip()
     
     # Get category
     category = next((c for c in SUD_CATEGORIES if c.name == category_name), None)
@@ -368,7 +368,7 @@ def render_category_view(category_selection, sort_by="evidence_score"):
     
     html = f"""
     <div style="padding: 20px;">
-        <h1 style="color: {UAB_GREEN};">{category.color} {category.name}</h1>
+        <h1 style="color: {UAB_GREEN};">{category.name}</h1>
         <p style="color: #718096; margin-bottom: 20px;">{category.description}</p>
         <p style="background: #F7FAFC; padding: 15px; border-radius: 10px; border-left: 4px solid {category.hex_color};">
             <b style="color: {UAB_DARK_GREEN};">{len(filtered)} drug candidates</b> being evaluated for repositioning
@@ -376,7 +376,7 @@ def render_category_view(category_selection, sort_by="evidence_score"):
         
         <div style="background: linear-gradient(135deg, {UAB_GREEN} 0%, {UAB_DARK_GREEN} 100%); padding: 20px; border-radius: 10px; 
                     margin: 20px 0; text-align: center; color: white; box-shadow: 0 4px 6px rgba(30,107,82,0.3);">
-            <h3 style="margin: 0 0 10px 0;">📊 View Detailed Dashboard</h3>
+            <h3 style="margin: 0 0 10px 0;">View Detailed Dashboard</h3>
             <p style="margin: 0; font-size: 14px; opacity: 0.9;">Select a candidate from the dropdown below to view complete analysis with evidence timeline</p>
         </div>
     </div>
@@ -389,13 +389,13 @@ def render_category_view(category_selection, sort_by="evidence_score"):
         
         # Rank badge - UAB colors
         if i == 1:
-            rank_badge = "🥇 #1"
+            rank_badge = "#1"
             border_color = UAB_GOLD
         elif i == 2:
-            rank_badge = "🥈 #2"
+            rank_badge = "#2"
             border_color = UAB_LIGHT_GREEN
         elif i == 3:
-            rank_badge = "🥉 #3"
+            rank_badge = "#3"
             border_color = UAB_ACCENT_TEAL
         else:
             rank_badge = f"#{i}"
@@ -406,7 +406,7 @@ def render_category_view(category_selection, sort_by="evidence_score"):
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <div>
                     <span style="background: #EDF2F7; padding: 5px 10px; border-radius: 20px; font-size: 14px; margin-right: 10px; color: {UAB_DARK_GREEN}; font-weight: bold;">{rank_badge}</span>
-                    <span style="font-size: 24px; font-weight: bold; color: {UAB_DARK_GREEN};">💊 {candidate.drug_name}</span>
+                    <span style="font-size: 24px; font-weight: bold; color: {UAB_DARK_GREEN};">{candidate.drug_name}</span>
                 </div>
                 {status_badge}
             </div>
@@ -420,19 +420,16 @@ def render_category_view(category_selection, sort_by="evidence_score"):
             
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0;">
                 <div style="text-align: center; padding: 10px; background: #F0F9F6; border-radius: 8px; border: 1px solid {UAB_LIGHT_GREEN};">
-                    <div style="font-size: 24px;">📁</div>
-                    <div style="font-weight: bold; color: {UAB_DARK_GREEN};">{len(candidate.attached_projects)}</div>
+                    <div style="font-weight: bold; color: {UAB_DARK_GREEN}; font-size: 20px;">{len(candidate.attached_projects)}</div>
                     <div style="font-size: 12px; color: #4A5568;">Projects</div>
                 </div>
                 <div style="text-align: center; padding: 10px; background: #FFFBF0; border-radius: 8px; border: 1px solid {UAB_GOLD};">
-                    <div style="font-size: 24px;">👥</div>
-                    <div style="font-weight: bold; color: {UAB_DARK_GOLD};">{candidate.cohort_count}</div>
+                    <div style="font-weight: bold; color: {UAB_DARK_GOLD}; font-size: 20px;">{candidate.cohort_count}</div>
                     <div style="font-size: 12px; color: #4A5568;">Cohorts</div>
                 </div>
                 <div style="text-align: center; padding: 10px; background: #F0F9F6; border-radius: 8px; border: 1px solid {UAB_LIGHT_GREEN};">
-                    <div style="font-size: 24px;">💰</div>
-                    <div style="font-weight: bold; color: {UAB_GREEN};">{"✅" if candidate.has_market_analysis else "❌"}</div>
-                    <div style="font-size: 12px; color: #4A5568;">Market</div>
+                    <div style="font-weight: bold; color: {UAB_GREEN}; font-size: 20px;">{"✅" if candidate.has_market_analysis else "—"}</div>
+                    <div style="font-size: 12px; color: #4A5568;">Market Analysis</div>
                 </div>
             </div>
             
@@ -469,7 +466,7 @@ def render_candidate_dashboard(candidate_selection, category_selection):
     html_before_plot = f"""
     <div style="padding: 20px;">
         <div style="background: linear-gradient(135deg, {UAB_GREEN} 0%, {UAB_DARK_GREEN} 100%); padding: 30px; border-radius: 15px; color: white; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(30,107,82,0.3);">
-            <h1 style="margin: 0;">💊 {candidate.drug_name}</h1>
+            <h1 style="margin: 0;">{candidate.drug_name}</h1>
             <p style="margin: 10px 0 0 0; font-size: 18px; opacity: 0.9;">Repositioning Candidate for {candidate.target_sud_subtype}</p>
             <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.8;">University of Alabama at Birmingham - SUD-PROMISE</p>
         </div>
@@ -481,7 +478,7 @@ def render_candidate_dashboard(candidate_selection, category_selection):
             </div>
         </div>
         
-        <h2 style="color: {UAB_GREEN};">📋 Drug Information</h2>
+        <h2 style="color: {UAB_GREEN};">Drug Information</h2>
         <div style="background: #F0F9F6; padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid {UAB_GREEN};">
             <p style="margin: 10px 0;"><b>Current Indication:</b> {candidate.current_indication}</p>
             <p style="margin: 10px 0;"><b>Target SUD:</b> {candidate.target_sud_subtype}</p>
@@ -489,7 +486,7 @@ def render_candidate_dashboard(candidate_selection, category_selection):
             <p style="margin: 10px 0;"><b>SMILES:</b> <code>{candidate.smiles}</code></p>
         </div>
         
-        <h2 style="color: {UAB_GREEN};">📊 Evidence Evolution</h2>
+        <h2 style="color: {UAB_GREEN};">Evidence Evolution</h2>
         <div style="background: #FFFBF0; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid {UAB_GOLD};">
             <p><b>Baseline Score:</b> {candidate.baseline_score:.2f} (no evidence)</p>
             <p><b>Current Score:</b> <span style="color: {UAB_GREEN}; font-weight: bold;">{candidate.evidence_score:.2f}</span></p>
@@ -501,7 +498,7 @@ def render_candidate_dashboard(candidate_selection, category_selection):
     # PART 2: Everything AFTER the timeline plot
     html_after_plot = f"""
     <div style="padding: 0 20px 20px 20px;">
-        <h2 style="color: {UAB_GREEN};">📁 Attached Evidence Projects ({len(candidate.attached_projects)})</h2>
+        <h2 style="color: {UAB_GREEN};">Attached Evidence Projects ({len(candidate.attached_projects)})</h2>
         <p style="color: #718096; margin-bottom: 15px;">Projects contributing to prediction confidence</p>
     """
     
@@ -512,7 +509,7 @@ def render_candidate_dashboard(candidate_selection, category_selection):
         html_after_plot += f"""
         <div style="background: white; border-left: 5px solid {UAB_GREEN}; padding: 20px; margin: 15px 0; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h3 style="margin: 0; color: {UAB_DARK_GREEN};">📁 {project.name}</h3>
+                <h3 style="margin: 0; color: {UAB_DARK_GREEN};">{project.name}</h3>
                 {impact_badge}
             </div>
             
@@ -535,29 +532,25 @@ def render_candidate_dashboard(candidate_selection, category_selection):
     
     html_after_plot += f"""
         <div style="margin-top: 30px; padding: 20px; background: #F0F9F6; border-radius: 10px; border-left: 4px solid {UAB_GREEN};">
-            <h3 style="color: {UAB_DARK_GREEN};">💡 Quick Stats</h3>
+            <h3 style="color: {UAB_DARK_GREEN};">Summary Statistics</h3>
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
     """
     
     html_after_plot += f"""
                 <div style="text-align: center;">
-                    <div style="font-size: 32px;">📁</div>
                     <div style="font-weight: bold; font-size: 24px; color: {UAB_GREEN};">{len(candidate.attached_projects)}</div>
-                    <div style="color: #4A5568;">Projects</div>
+                    <div style="color: #4A5568;">Evidence Projects</div>
                 </div>
                 <div style="text-align: center;">
-                    <div style="font-size: 32px;">👥</div>
                     <div style="font-weight: bold; font-size: 24px; color: {UAB_GOLD};">{candidate.cohort_count}</div>
-                    <div style="color: #4A5568;">Cohorts</div>
+                    <div style="color: #4A5568;">Patient Cohorts</div>
                 </div>
                 <div style="text-align: center;">
-                    <div style="font-size: 32px;">🧪</div>
-                    <div style="font-weight: bold; font-size: 24px; color: {UAB_GREEN};">{"✅" if candidate.has_validation_plan else "❌"}</div>
+                    <div style="font-weight: bold; font-size: 24px; color: {UAB_GREEN};">{"✅" if candidate.has_validation_plan else "—"}</div>
                     <div style="color: #4A5568;">Validation Plan</div>
                 </div>
                 <div style="text-align: center;">
-                    <div style="font-size: 32px;">💰</div>
-                    <div style="font-weight: bold; font-size: 24px; color: {UAB_GOLD};">{"✅" if candidate.has_market_analysis else "❌"}</div>
+                    <div style="font-weight: bold; font-size: 24px; color: {UAB_GOLD};">{"✅" if candidate.has_market_analysis else "—"}</div>
                     <div style="color: #4A5568;">Market Analysis</div>
                 </div>
     """
@@ -664,7 +657,7 @@ def create_interface():
             # Header - UAB colors
             gr.Markdown(f"""
             <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, {UAB_GREEN} 0%, {UAB_DARK_GREEN} 100%); border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(30,107,82,0.3);">
-                <h1 style="color: white; margin: 0;">🧬 SUD-PROMISE Drug Repositioning Assessment Platform</h1>
+                <h1 style="color: white; margin: 0;">SUD-PROMISE Drug Repositioning Assessment Platform</h1>
                 <p style="color: white; opacity: 0.9; margin: 10px 0 0 0;">University of Alabama at Birmingham - Evidence-Based Drug Discovery for Substance Use Disorders</p>
             </div>
             """)
@@ -686,7 +679,7 @@ def create_interface():
                         label="SUD Categories",
                         interactive=True
                     )
-                    view_category_btn = gr.Button("🔍 View Candidates", variant="primary", size="lg")
+                    view_category_btn = gr.Button("View Candidates", variant="primary", size="lg")
                 
                 # Category view
                 with gr.Column(visible=False) as category_view:
@@ -700,7 +693,7 @@ def create_interface():
                             interactive=True
                         )
                     
-                    gr.Markdown("### 🔍 Click a candidate below to view detailed dashboard")
+                    gr.Markdown("### Select a candidate to view detailed dashboard")
                     candidate_selector = gr.Dropdown(
                         choices=[],
                         label="Select Candidate",
@@ -710,14 +703,14 @@ def create_interface():
                     
                     with gr.Row():
                         back_to_dashboard_btn = gr.Button("← Back to Dashboard", variant="secondary")
-                        view_candidate_btn = gr.Button("📊 View Selected Dashboard", variant="primary", size="lg", visible=False)
+                        view_candidate_btn = gr.Button("View Selected Dashboard", variant="primary", size="lg", visible=False)
                 
                 # Candidate detail view
                 with gr.Column(visible=False) as candidate_view:
                     candidate_html_before = gr.HTML()
                     
                     # Timeline plot positioned between evidence evolution and projects
-                    gr.Markdown("### 📈 Evidence Score Evolution Timeline")
+                    gr.Markdown("### Evidence Score Evolution Timeline")
                     timeline_plot = gr.Plot()
                     
                     gr.Markdown("---")
@@ -734,7 +727,7 @@ def create_interface():
             """Show landing dashboard"""
             dash_html, top_html, categories = render_landing_dashboard()
             return (
-                "🏠 Dashboard",  # breadcrumb
+                "Dashboard",  # breadcrumb
                 dash_html,  # dashboard_html
                 top_html,  # top_candidates_html
                 gr.update(choices=categories, value=None),  # category_selector
@@ -753,7 +746,7 @@ def create_interface():
             category_name = category_selection.split(" (")[0]
             
             return (
-                f"🏠 Dashboard > 🎯 {category_name}",  # breadcrumb
+                f"Dashboard > {category_name}",  # breadcrumb
                 cat_html,  # category_html
                 gr.update(choices=candidates, value=None),  # candidate_selector
                 gr.update(visible=False),  # dashboard_view
@@ -773,7 +766,7 @@ def create_interface():
             category_name = category_selection.split(" (")[0] if category_selection else "Category"
             
             return (
-                f"🏠 Dashboard > 🎯 {category_name} > 💊 {candidate_name}",  # breadcrumb
+                f"Dashboard > {category_name} > {candidate_name}",  # breadcrumb
                 html_before,  # candidate_html_before
                 timeline_fig,  # timeline_plot
                 html_after,   # candidate_html_after
