@@ -47,5 +47,7 @@ def render_category_view(category_selection, sort_by="Evidence Score"):
     
     
     candidate_choices = [f"{c.drug_name} (Score: {c.evidence_score:.2f})" for c in filtered]
+
+    html = ""
     
     return html, candidate_choices, filtered
